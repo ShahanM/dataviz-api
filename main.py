@@ -1,12 +1,41 @@
 from fastapi import FastAPI
 import json
-from controllers.data_accesor import get_nerds_by_year, get_nceds_by_year, \
-	merge_data, agg_nceds, get_agg_data, get_data_json
+from controllers.data_accesor import get_data_json
 from models.schema import NCEDItem, NCEDNerdItem
 from typing import List
 from data.datamap import state_id_file
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(
+    root_path='/dataviz/api/',
+)
+
+# contact={
+#     'name': '',
+#     'url': '',
+#     'email': '',
+# },
+# license_info={
+#     'name': '',
+#     'url': '',
+# }
+
+
+origins = [
+    'http://localhost:3000',
+    'http://localhost:3000/*',
+    'http://localhost:3001/*',
+	'https://shahanm.github.io/math-factors/'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
 
 @app.get("/")
 async def root():
