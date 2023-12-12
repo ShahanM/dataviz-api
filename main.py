@@ -41,7 +41,8 @@ async def state_data(stateid: str):
 	if stateid in state_id_datafile:
 		with open('data/states/' + state_id_datafile[stateid]) as f:
 			d = json.load(f)
-	return {'data': d, 'key': state_id_datafile[stateid][:-5]}
+		return {'data': d, 'key': state_id_datafile[stateid][:-5]}
+	return {'data': {}, 'key': stateid}
 
 
 @app.get("/state/{stateid}")
@@ -49,4 +50,5 @@ async def district_json(stateid: str):
 	if stateid in state_id_file:
 		with open('data/district_topojson/' + state_id_file[stateid]) as f:
 			d = json.load(f)
-	return {"data": d, "key": state_id_file[stateid][:-5]}
+		return {"data": d, "key": state_id_file[stateid][:-5]}
+	return {'data': {}, 'key': stateid}
